@@ -5,11 +5,41 @@ using UnityEngine.AI;
 
 public class Mover : MonoBehaviour
 {
-    [SerializeField] Transform target;
+
+    private void Start()
+    {
+        GetComponent<NavMeshAgent>();
+    }
+
+    private void Update()
+    {
+        MoveForwards();
+
+        UpdateAnimation();
+    }
+
+    private void MoveForwards()
+    {
+        float horInput = Input.GetAxis("Horizontal");
+        float verInput = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(horInput, 0f, verInput);
+        Vector3 moveDestination = transform.position + movement;
+        GetComponent<NavMeshAgent>().destination = moveDestination;
+    }
+
+    private void UpdateAnimation()
+    {
+        Vector3 localVelocity = transform.InverseTransformDirection(GetComponent<NavMeshAgent>().velocity);
+        float speed = localVelocity.z;
+        GetComponent<Animator>().SetFloat("forwardSpeed", speed);
+    }
+
+
+    /*[SerializeField] Transform target;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) MoveToCursor();
+        if (Input.GetMouseButton(0)) MoveToCursor();
         UpdateAnimation();
     }
 
@@ -25,5 +55,5 @@ public class Mover : MonoBehaviour
         Vector3 localVelocity = transform.InverseTransformDirection(GetComponent<NavMeshAgent>().velocity);
         float speed = localVelocity.z;
         GetComponent<Animator>().SetFloat("forwardSpeed", speed);
-    }
+    }*/
 }
