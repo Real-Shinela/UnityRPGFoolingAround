@@ -1,6 +1,7 @@
 using UnityEngine;
 using RPG.Combat;
 using RPG.Movement;
+using UnityEngine.AI;
 
 namespace RPG.Control
 {
@@ -10,7 +11,6 @@ namespace RPG.Control
         {
             InteractWithCombat();
             bool test = MoveForwards();
-            if (!test) print("false");
         }
 
         private bool InteractWithCombat()
@@ -24,7 +24,7 @@ namespace RPG.Control
                     continue;
                 }
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(1))
                 {
                     GetComponent<Fighter>().Attack(target);
                 }
@@ -38,15 +38,29 @@ namespace RPG.Control
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
 
+        public void Stop()
+        {
+            GetComponent<NavMeshAgent>().isStopped = true;
+        }
+
         private bool MoveForwards()
         {
             float horInput = Input.GetAxis("Horizontal");
             float verInput = Input.GetAxis("Vertical");
+            if (horInput == 0 && verInput == 0)
+            {
+                Stop();
+            }
+            else
+            {
+                GetComponent<NavMeshAgent>().isStopped = false;
+            }
+            if (GetComponent<NavMeshAgent>().isStopped) return false;
+
             Vector3 movement = new Vector3(horInput, 0f, verInput);
             Vector3 moveDestination = transform.position + movement;
             GetComponent<Mover>().MoveTo(moveDestination);
-            if (moveDestination == transform.position) return false;
-            else return true;
+            return true;
         }
     }
 }
