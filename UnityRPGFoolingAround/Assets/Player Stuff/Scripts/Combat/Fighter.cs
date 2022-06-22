@@ -6,6 +6,8 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour
     {
+        [SerializeField] float AttackRange;
+
         public void Attack(CombatTarget target)
         {
             print("Uwot m9 fite me");

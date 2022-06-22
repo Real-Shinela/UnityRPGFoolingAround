@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using RPG.Combat;
 using RPG.Movement;
@@ -11,10 +9,11 @@ namespace RPG.Control
         private void Update()
         {
             InteractWithCombat();
-            MoveForwards();
+            bool test = MoveForwards();
+            if (!test) print("false");
         }
 
-        private void InteractWithCombat()
+        private bool InteractWithCombat()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
             foreach (RaycastHit hit in hits)
@@ -29,7 +28,9 @@ namespace RPG.Control
                 {
                     GetComponent<Fighter>().Attack(target);
                 }
+                return true;
             }
+            return false;
         }
 
         private static Ray GetMouseRay()
@@ -37,13 +38,15 @@ namespace RPG.Control
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
 
-        private void MoveForwards()
+        private bool MoveForwards()
         {
             float horInput = Input.GetAxis("Horizontal");
             float verInput = Input.GetAxis("Vertical");
             Vector3 movement = new Vector3(horInput, 0f, verInput);
             Vector3 moveDestination = transform.position + movement;
             GetComponent<Mover>().MoveTo(moveDestination);
+            if (moveDestination == transform.position) return false;
+            else return true;
         }
     }
 }
