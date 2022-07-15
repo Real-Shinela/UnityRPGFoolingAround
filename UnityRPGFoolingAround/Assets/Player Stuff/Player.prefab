@@ -191,7 +191,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89d7e0010443e554991764776070df3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDamage: 10
+  attackDeviationRange: 3
   AttackRange: 2
+  AttackCoolDown: 2
   target: {fileID: 0}
 --- !u!114 &2035147007
 MonoBehaviour:

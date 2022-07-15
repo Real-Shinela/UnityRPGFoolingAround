@@ -1,16 +1,18 @@
 using UnityEngine;
 using RPG.Movement;
 using RPG.Core;
+using System.Collections;
 
 namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
+        [SerializeField] float attackDamage = 10f;
+        [SerializeField] float attackDeviationRange = 3f;
         [SerializeField] float AttackRange = 2f;
         [SerializeField] float AttackCoolDown = 5f;
-        private float AttackCDTemp = 0f;
         private Animator animator;
-
+        private bool attackReady = true;
         public Transform target;
 
         private void Start()
@@ -30,11 +32,7 @@ namespace RPG.Combat
                 }
                 else
                 {
-                    if (AttackCDTemp < Time.time)
-                    {
-                        AttackAnimStart();
-                        AttackCDTemp = Time.time + AttackCoolDown;
-                    }
+                    AttackRoutine();
                 }
             }
             else
@@ -48,6 +46,25 @@ namespace RPG.Combat
             target = combatTarget.transform;
         }
 
+        private void AttackRoutine()
+        {
+            // Attack not ready therefore just stop
+            if (!attackReady) return;
+            // Anything below this happens if attack IS ready
+
+            AttackAnimStart();
+
+            // Cooldown starts here
+            StartCoroutine(AttackCooldown());
+        }
+
+        private IEnumerator AttackCooldown()
+        {
+            attackReady = false;
+            yield return new WaitForSeconds(AttackCoolDown);
+            attackReady = true;
+        }
+
         public void Cancel()
         {
             GetComponent<ActionScheduler>().StartAction(this);
@@ -59,7 +76,13 @@ namespace RPG.Combat
         // Animator event
         void Hit()
         {
-            print("Damoog done");
+            if (target.TryGetComponent(out Health targetHP))
+            {
+                // Damage Roundings to halves
+                float damageDone = Mathf.Round((attackDamage + Random.Range(-attackDeviationRange, attackDeviationRange)) * 2) / 2;
+                print(damageDone);
+                targetHP.TakeDamage(damageDone);
+            }
         }
 
         private void AttackAnimStart()
