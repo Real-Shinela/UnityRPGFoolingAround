@@ -12,7 +12,6 @@ namespace RPG.Core
             if (currAct == action) return;
             if (currAct != null)
             {
-                print("Cancelling" + currAct);
                 currAct.Cancel();
             }
             currAct = action;
