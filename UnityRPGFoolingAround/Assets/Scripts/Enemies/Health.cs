@@ -16,7 +16,7 @@ namespace RPG.Combat
 
         public void TakeDamage(float damage)
         {
-            currHealth -= damage;
+            currHealth = Mathf.Clamp(currHealth - damage, 0, maxHealth);
             print(currHealth);
             if (currHealth <= 0)
             {

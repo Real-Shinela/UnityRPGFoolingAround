@@ -3890,10 +3890,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2035147000, guid: b6ee12be45d72f94991495166d4897bd, type: 3}
-      propertyPath: AttackCoolDown
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 154715283732417185, guid: b6ee12be45d72f94991495166d4897bd, type: 3}
       propertyPath: m_RootOrder
       value: 2
