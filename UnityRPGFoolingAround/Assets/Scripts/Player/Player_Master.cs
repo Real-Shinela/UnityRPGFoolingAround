@@ -7,15 +7,14 @@ public class Player_Master : MonoBehaviour
     [SerializeField] int MaxHealth;
     [SerializeField] int MaxMana;
     [SerializeField] bool Caster;
-    // Start is called before the first frame update
+
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

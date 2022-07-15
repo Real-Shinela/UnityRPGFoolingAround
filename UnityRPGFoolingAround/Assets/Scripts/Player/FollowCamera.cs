@@ -12,6 +12,5 @@ namespace RPG.CameraFollower
         {
             transform.position = target.position;
         }
-
     }
 }
