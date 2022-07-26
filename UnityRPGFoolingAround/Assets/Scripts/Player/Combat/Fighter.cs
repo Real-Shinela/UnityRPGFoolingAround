@@ -15,6 +15,7 @@ namespace RPG.Combat
         private bool attackReady = true;
         public Transform target;
 
+
         private void Start()
         {
             animator = GetComponent<Animator>();
@@ -27,11 +28,14 @@ namespace RPG.Combat
                 bool isInRange = Vector3.Distance(transform.position, target.position) < AttackRange;
                 if (!isInRange)
                 {
+                    enabled = false;
+                    enabled = true;
                     GetComponent<ActionScheduler>().StartAction(this);
                     GetComponent<Mover>().MoveTo(target.position);
                 }
                 else
                 {
+                    GetComponent<ActionScheduler>().StartAction(this);
                     AttackRoutine();
                 }
             }

@@ -8,19 +8,23 @@ namespace RPG.Combat
     {
         [SerializeField] float maxHealth = 100;
         [SerializeField] float currHealth;
+        private Animator anim;
+        private bool hasntDied = true;
 
         private void Awake()
         {
             currHealth = maxHealth;
+            anim = GetComponent<Animator>();
         }
 
         public void TakeDamage(float damage)
         {
             currHealth = Mathf.Clamp(currHealth - damage, 0, maxHealth);
 
-            if (currHealth <= 0)
+            if (currHealth <= 0 && hasntDied)
             {
-                Destroy(this.gameObject);
+                anim.SetTrigger("die");
+                hasntDied = false;
             }
         }
     }

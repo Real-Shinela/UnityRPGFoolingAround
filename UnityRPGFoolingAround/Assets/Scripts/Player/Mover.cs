@@ -30,8 +30,8 @@ namespace RPG.Movement
 
         public void MoveTo(Vector3 moveDestination)
         {
-            navMeshAgent.destination = moveDestination;
             navMeshAgent.isStopped = false;
+            navMeshAgent.SetDestination(moveDestination);
         }
 
         public void Cancel()

@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40ee68ee368f1b4a849d7fe3f9cef80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 0
-  MaxMana: 0
+  MaxHealth: 150
+  MaxMana: 20
   Caster: 0
 --- !u!114 &4481367199346843071
 MonoBehaviour:
@@ -191,10 +191,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89d7e0010443e554991764776070df3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 10
+  attackDamage: 15
   attackDeviationRange: 3
   AttackRange: 2
-  AttackCoolDown: 2
+  AutoAttCd: 3
   target: {fileID: 0}
 --- !u!114 &2035147007
 MonoBehaviour:
