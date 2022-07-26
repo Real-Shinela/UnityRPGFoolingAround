@@ -10,7 +10,7 @@ namespace RPG.Combat
         [SerializeField] float attackDamage = 10f;
         [SerializeField] float attackDeviationRange = 3f;
         [SerializeField] float AttackRange = 2f;
-        [SerializeField] float AttackCoolDown = 5f;
+        [SerializeField] float AutoAttCd = 5f;
         private Animator animator;
         private bool attackReady = true;
         public Transform target;
@@ -35,10 +35,6 @@ namespace RPG.Combat
                     AttackRoutine();
                 }
             }
-            else
-            {
-
-            }
         }
 
         public void Attack(CombatTarget combatTarget)
@@ -61,7 +57,7 @@ namespace RPG.Combat
         private IEnumerator AttackCooldown()
         {
             attackReady = false;
-            yield return new WaitForSeconds(AttackCoolDown);
+            yield return new WaitForSeconds(AutoAttCd);
             attackReady = true;
         }
 
@@ -80,7 +76,7 @@ namespace RPG.Combat
             {
                 // Damage Roundings to halves
                 float damageDone = Mathf.Round((attackDamage + Random.Range(-attackDeviationRange, attackDeviationRange)) * 2) / 2;
-                print(damageDone);
+
                 targetHP.TakeDamage(damageDone);
             }
         }
