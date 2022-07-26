@@ -9,7 +9,12 @@ namespace RPG.Combat
         [SerializeField] float maxHealth = 100;
         [SerializeField] float currHealth;
         private Animator anim;
-        private bool hasntDied = true;
+        bool isDead = false;
+
+        public bool IsDead()
+        {
+            return isDead;
+        }
 
         private void Awake()
         {
@@ -21,10 +26,11 @@ namespace RPG.Combat
         {
             currHealth = Mathf.Clamp(currHealth - damage, 0, maxHealth);
 
-            if (currHealth <= 0 && hasntDied)
+            if (currHealth <= 0)
             {
+                if (isDead) return;
                 anim.SetTrigger("die");
-                hasntDied = false;
+                isDead = true;
             }
         }
     }
