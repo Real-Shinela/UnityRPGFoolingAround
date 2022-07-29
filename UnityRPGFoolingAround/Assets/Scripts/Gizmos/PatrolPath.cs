@@ -12,9 +12,10 @@ namespace RPG.Control
             for (int i = 0; i < transform.childCount; i++)
             {
                 Transform gizSpot = transform.GetChild(i);
-                Transform gizNextSpot =
+                /*Transform gizNextSpot =
                     i == transform.childCount - 1 ?
-                    transform.GetChild(0) : transform.GetChild(i + 1);
+                    transform.GetChild(0) : transform.GetChild(i + 1);*/
+                Transform gizNextSpot = transform.GetChild((i + 1) % transform.childCount);
 
                 Gizmos.color = Color.cyan;
                 Gizmos.DrawSphere(gizSpot.position, 0.4f);
