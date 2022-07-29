@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Core;
-
+using RPG.Movement;
 
 namespace RPG.Control
 {
@@ -13,8 +13,12 @@ namespace RPG.Control
         [SerializeField] float aggressDist = 15f;
 
         private Fighter fighter;
+        private Mover mover;
         private Health health;
         private GameObject player;
+
+        // Guarding stuff
+        private Vector3 guardPos;
 
         // Distance checking to save processing power
         private float nextCheck;
@@ -26,6 +30,8 @@ namespace RPG.Control
             fighter = GetComponent<Fighter>();
             player = GameObject.FindWithTag("Player");
             health = GetComponent<Health>();
+            mover = GetComponent<Mover>();
+            guardPos = transform.position;
         }
 
         private void Update()
@@ -36,6 +42,7 @@ namespace RPG.Control
             {
                 nextCheck = Time.time + checkSpeed;
                 if (PlayerInRange() && fighter.CanAttack(player)) fighter.Attack(player);
+                else mover.MoveAction(guardPos);
             }
         }
 
