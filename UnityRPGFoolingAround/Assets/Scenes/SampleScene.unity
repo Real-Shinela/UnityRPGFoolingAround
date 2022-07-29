@@ -2630,10 +2630,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 63352961, guid: 5f30091887ceefa4a8a9037fb68bea72, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6620184439981649325, guid: 5f30091887ceefa4a8a9037fb68bea72, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -2681,14 +2677,6 @@ PrefabInstance:
     - target: {fileID: 6620184439981649332, guid: 5f30091887ceefa4a8a9037fb68bea72, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620184439981649334, guid: 5f30091887ceefa4a8a9037fb68bea72, type: 3}
-      propertyPath: m_Radius
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620184439981649334, guid: 5f30091887ceefa4a8a9037fb68bea72, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f30091887ceefa4a8a9037fb68bea72, type: 3}
@@ -3890,10 +3878,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2035147000, guid: b6ee12be45d72f94991495166d4897bd, type: 3}
-      propertyPath: AutoAttCd
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 154715283732417185, guid: b6ee12be45d72f94991495166d4897bd, type: 3}
       propertyPath: m_RootOrder
       value: 2

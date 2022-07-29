@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 2035147007}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -194,7 +194,7 @@ MonoBehaviour:
   attackDamage: 15
   attackDeviationRange: 3
   AttackRange: 2
-  AutoAttCd: 3
+  AutoAttCd: 1
   target: {fileID: 0}
 --- !u!114 &2035147007
 MonoBehaviour:
