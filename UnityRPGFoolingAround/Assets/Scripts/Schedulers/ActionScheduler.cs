@@ -16,5 +16,10 @@ namespace RPG.Core
             }
             currAct = action;
         }
+
+        public void CancelCurrAction()
+        {
+            StartAction(null);
+        }
     }
 }
