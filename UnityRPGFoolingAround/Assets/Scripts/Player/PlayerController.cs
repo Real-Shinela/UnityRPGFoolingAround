@@ -2,6 +2,7 @@ using UnityEngine;
 using RPG.Combat;
 using RPG.Movement;
 using UnityEngine.AI;
+using RPG.Core;
 
 namespace RPG.Control
 {
@@ -10,18 +11,25 @@ namespace RPG.Control
         private NavMeshAgent navMesh;
         private Mover mover;
         private Fighter fighter;
+        private Health health;
 
         private void Start()
         {
+            enabled = true;
             navMesh = GetComponent<NavMeshAgent>();
             mover = GetComponent<Mover>();
             fighter = GetComponent<Fighter>();
+            health = GetComponent<Health>();
         }
 
         private void Update()
         {
-            InteractWithCombat();
-            MoveForwards();
+            if (!health.IsDead())
+            {
+                InteractWithCombat();
+                MoveForwards();
+            }
+            else enabled = false;
         }
 
         private bool InteractWithCombat()
@@ -31,16 +39,12 @@ namespace RPG.Control
                 RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
                 foreach (RaycastHit hit in hits)
                 {
-                    print(hit.transform.name);
-                }
-                foreach (RaycastHit hit in hits)
-                {
                     if (hit.transform.TryGetComponent(out CombatTarget target))
                     {
-                        fighter.Attack(target);
+                        fighter.Attack(target.gameObject);
 
                         // See if can attack. If not, keep going                        
-                        if (!fighter.CanAttack(target))
+                        if (!fighter.CanAttack(target.gameObject))
                         {
                             continue;
                         }

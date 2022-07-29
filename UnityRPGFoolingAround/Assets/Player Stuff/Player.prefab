@@ -18,9 +18,10 @@ GameObject:
   - component: {fileID: 2035146993}
   - component: {fileID: 2035147000}
   - component: {fileID: 2035147007}
+  - component: {fileID: 5641453880413031235}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +122,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 5.6
+  m_Speed: 8
   m_Acceleration: 910
   avoidancePriority: 50
   m_AngularSpeed: 900
@@ -194,7 +195,7 @@ MonoBehaviour:
   attackDamage: 15
   attackDeviationRange: 3
   AttackRange: 2
-  AutoAttCd: 3
+  AutoAttCd: 1
   target: {fileID: 0}
 --- !u!114 &2035147007
 MonoBehaviour:
@@ -208,6 +209,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92520fb33470cb41a4ed0ac72ad4a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5641453880413031235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888525089359744611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68d4673e063e164198cad6d3ac7c46d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currHealth: 0
 --- !u!1001 &4970823612051772757
 PrefabInstance:
   m_ObjectHideFlags: 0
