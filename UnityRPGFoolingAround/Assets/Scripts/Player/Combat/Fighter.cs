@@ -89,8 +89,9 @@ namespace RPG.Combat
         public void Cancel()
         {
             GetComponent<ActionScheduler>().StartAction(this);
-            animator.ResetTrigger("AttackTrigger");
             animator.SetTrigger("cancelAttack");
+            animator.ResetTrigger("cancelAttack");
+            animator.ResetTrigger("AttackTrigger");
             CancelInvoke();
             target = null;
         }
@@ -106,7 +107,14 @@ namespace RPG.Combat
         {
             // Damage Roundings to halves
             float damageDone = Mathf.Round((attackDamage + Random.Range(-attackDeviationRange, attackDeviationRange)) * 2) / 2;
-            target.TakeDamage(damageDone);
+            try
+            {
+                target.TakeDamage(damageDone);
+            }
+            catch (System.NullReferenceException)
+            {
+                Debug.Log("lol u missed");
+            }
         }
 
     }
