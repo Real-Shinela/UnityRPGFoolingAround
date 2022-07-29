@@ -13,7 +13,7 @@ namespace RPG.Control
         private GameObject player;
 
         private float nextCheck;
-        private float checkSpeed = 0.5f;
+        private readonly float checkSpeed = 0.5f;
 
         private void Awake()
         {
