@@ -1,6 +1,4 @@
 using RPG.Combat;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using RPG.Core;
 using RPG.Movement;
@@ -11,6 +9,7 @@ namespace RPG.Control
     {
         [SerializeField] float chaseDist = 10f;
         [SerializeField] float aggressDist = 15f;
+        [SerializeField] float suspicionTme = 5f;
 
         private Fighter fighter;
         private Mover mover;
@@ -19,6 +18,7 @@ namespace RPG.Control
 
         // Guarding stuff
         private Vector3 guardPos;
+        float timeSinceSawPlayer = Mathf.Infinity;
 
         // Distance checking to save processing power
         private float nextCheck;
@@ -36,14 +36,50 @@ namespace RPG.Control
 
         private void Update()
         {
+            // If dead, don't do anything
             if (health.IsDead()) enabled = false;
+
+            timeSinceSawPlayer += Time.deltaTime;
 
             if (nextCheck < Time.time)
             {
                 nextCheck = Time.time + checkSpeed;
-                if (PlayerInRange() && fighter.CanAttack(player)) fighter.Attack(player);
-                else mover.MoveAction(guardPos);
+
+                // Attack goes first
+                if (PlayerInRange() && fighter.CanAttack(player))
+                {
+                    AttackBehaviour();
+                }
+
+                // Enemy left sight: Be suspicious
+                else if (timeSinceSawPlayer < suspicionTme)
+                {
+                    SuspicionBehaviour();
+                }
+
+                // Return to position because suspicion is lost
+                else
+                {
+                    GuardBehaviour();
+                }
+
             }
+        }
+
+        private void AttackBehaviour()
+        {
+            timeSinceSawPlayer = 0;
+            fighter.Attack(player);
+        }
+
+        private void SuspicionBehaviour()
+        {
+            GetComponent<ActionScheduler>().CancelCurrAction();
+        }
+
+        private void GuardBehaviour()
+        {
+            mover.MoveAction(guardPos);
         }
 
         private bool PlayerInRange()

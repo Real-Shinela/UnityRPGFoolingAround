@@ -40,6 +40,7 @@ namespace RPG.Movement
 
         public void Cancel()
         {
+            navMeshAgent.ResetPath();
             navMeshAgent.isStopped = true;
         }
 
