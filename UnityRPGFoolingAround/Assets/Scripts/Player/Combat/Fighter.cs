@@ -7,13 +7,19 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
+        // Combat stuff
         [SerializeField] float attackDamage = 10f;
         [SerializeField] float attackDeviationRange = 3f;
         [SerializeField] float AttackRange = 2f;
-        [SerializeField] float AttackCoolDown = 5f;
+        [SerializeField] float AutoAttCd = 5f;
+
+        // Animations
         private Animator animator;
         private bool attackReady = true;
-        public Transform target;
+
+        // Targetting
+        public Health target;
+
 
         private void Start()
         {
@@ -24,30 +30,45 @@ namespace RPG.Combat
         {
             if (target != null)
             {
-                bool isInRange = Vector3.Distance(transform.position, target.position) < AttackRange;
+                if (target.IsDead())
+                {
+                    Cancel();
+                    return;
+                }
+                bool isInRange = Vector3.Distance(transform.position, target.transform.position) < AttackRange;
                 if (!isInRange)
                 {
+                    enabled = false;
+                    enabled = true;
                     GetComponent<ActionScheduler>().StartAction(this);
-                    GetComponent<Mover>().MoveTo(target.position);
+                    GetComponent<Mover>().MoveTo(target.transform.position);
                 }
                 else
                 {
+                    GetComponent<ActionScheduler>().StartAction(this);
                     AttackRoutine();
                 }
             }
-            else
-            {
+        }
 
-            }
+        public bool CanAttack(CombatTarget combatTarget)
+        {
+            if (combatTarget == null) return false;
+
+            Health targetToTest = combatTarget.GetComponent<Health>();
+
+            return targetToTest != null && !targetToTest.IsDead();
         }
 
         public void Attack(CombatTarget combatTarget)
         {
-            target = combatTarget.transform;
+            target = combatTarget.GetComponent<Health>();
         }
 
         private void AttackRoutine()
         {
+            transform.LookAt(target.transform);
+
             // Attack not ready therefore just stop
             if (!attackReady) return;
             // Anything below this happens if attack IS ready
@@ -61,33 +82,40 @@ namespace RPG.Combat
         private IEnumerator AttackCooldown()
         {
             attackReady = false;
-            yield return new WaitForSeconds(AttackCoolDown);
+            yield return new WaitForSeconds(AutoAttCd);
             attackReady = true;
         }
 
         public void Cancel()
         {
             GetComponent<ActionScheduler>().StartAction(this);
+            animator.SetTrigger("cancelAttack");
+            animator.ResetTrigger("cancelAttack");
             animator.ResetTrigger("AttackTrigger");
             CancelInvoke();
             target = null;
         }
 
-        // Animator event
-        void Hit()
-        {
-            if (target.TryGetComponent(out Health targetHP))
-            {
-                // Damage Roundings to halves
-                float damageDone = Mathf.Round((attackDamage + Random.Range(-attackDeviationRange, attackDeviationRange)) * 2) / 2;
-                print(damageDone);
-                targetHP.TakeDamage(damageDone);
-            }
-        }
-
+        // Starting animation which triggers Hit()
         private void AttackAnimStart()
         {
             animator.SetTrigger("AttackTrigger");
         }
+
+        // Animator event
+        void Hit()
+        {
+            // Damage Roundings to halves
+            float damageDone = Mathf.Round((attackDamage + Random.Range(-attackDeviationRange, attackDeviationRange)) * 2) / 2;
+            try
+            {
+                target.TakeDamage(damageDone);
+            }
+            catch (System.NullReferenceException)
+            {
+                Debug.Log("lol u missed");
+            }
+        }
+
     }
 }
