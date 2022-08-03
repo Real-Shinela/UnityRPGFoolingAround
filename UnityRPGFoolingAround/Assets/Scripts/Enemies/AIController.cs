@@ -2,14 +2,21 @@ using RPG.Combat;
 using UnityEngine;
 using RPG.Core;
 using RPG.Movement;
+using System;
 
 namespace RPG.Control
 {
     public class AIController : MonoBehaviour
     {
+        [Header("Distances")]
         [SerializeField] float chaseDist = 10f;
         [SerializeField] float aggressDist = 15f;
+        [Header("Timers")]
         [SerializeField] float suspicionTme = 5f;
+        [SerializeField] float dwellTimeAtWaypoint = 5f;
+        [Header("Waypoint Stuff")]
+        [SerializeField] PatrolPath patrolPath;
+        [SerializeField] float wayPointTolerance = 1f;
 
         private Fighter fighter;
         private Mover mover;
@@ -18,7 +25,9 @@ namespace RPG.Control
 
         // Guarding stuff
         private Vector3 guardPos;
-        float timeSinceSawPlayer = Mathf.Infinity;
+        private float timeSinceSawPlayer = Mathf.Infinity;
+        private float timeSinceWayPoint = Mathf.Infinity;
+        public int currentWayPointIndex = 0;
 
         // Distance checking to save processing power
         private float nextCheck;
@@ -40,6 +49,7 @@ namespace RPG.Control
             if (health.IsDead()) enabled = false;
 
             timeSinceSawPlayer += Time.deltaTime;
+            timeSinceWayPoint += Time.deltaTime;
 
             if (nextCheck < Time.time)
             {
@@ -60,7 +70,7 @@ namespace RPG.Control
                 // Return to position because suspicion is lost
                 else
                 {
-                    GuardBehaviour();
+                    PatrolBehaviour();
                 }
 
             }
@@ -77,15 +87,43 @@ namespace RPG.Control
             GetComponent<ActionScheduler>().CancelCurrAction();
         }
 
-        private void GuardBehaviour()
+        private void PatrolBehaviour()
         {
-            mover.MoveAction(guardPos);
+            Vector3 nextPos;
+            if (patrolPath == null) nextPos = guardPos;
+            else
+            {                
+                if (Vector2DDistance(transform.position, GetWayPoint()) < wayPointTolerance)
+                {
+                    timeSinceWayPoint = 0;
+                    CycleWayPoint();
+                }
+                nextPos = GetWayPoint();
+            }
+            if (timeSinceWayPoint > dwellTimeAtWaypoint) mover.MoveAction(nextPos);
+        }
+
+        private Vector3 GetWayPoint()
+        {
+            return patrolPath.GetWayPoint(currentWayPointIndex);
+        }
+
+        private void CycleWayPoint()
+        {
+            currentWayPointIndex = patrolPath.GetNextIndex(currentWayPointIndex);
         }
 
         private bool PlayerInRange()
         {
             float dist = Vector3.Distance(player.transform.position, transform.position);
             return dist < aggressDist;
+        }
+
+        private float Vector2DDistance(Vector3 a, Vector3 b)
+        {
+            float xdiff = a.x - b.x;
+            float zdiff = a.z - b.z;
+            return MathF.Sqrt((xdiff * xdiff) + (zdiff * zdiff));
         }
     }
 }
