@@ -24,6 +24,16 @@ namespace RPG.Control
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                mover.maxSpeed *= 2;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                mover.maxSpeed /= 2;
+            }
+
+
             if (!health.IsDead())
             {
                 InteractWithCombat();
@@ -70,7 +80,7 @@ namespace RPG.Control
 
         private bool MoveForwards()
         {
-            float horInput = Input.GetAxis("Horizontal");
+            float horInput = -Input.GetAxis("Horizontal");
             float verInput = Input.GetAxis("Vertical");
             if (horInput == 0 && verInput == 0)
             {
@@ -82,7 +92,7 @@ namespace RPG.Control
             }
             if (navMesh.isStopped) return false;
 
-            Vector3 movement = new(horInput, 0f, verInput);
+            Vector3 movement = new(verInput, 0f, horInput);
             Vector3 moveDestination = transform.position + movement.normalized;
             mover.MoveAction(moveDestination);
             return true;

@@ -3,6 +3,7 @@ using UnityEngine;
 using RPG.Core;
 using RPG.Movement;
 using System;
+using UnityEngine.AI;
 
 namespace RPG.Control
 {
@@ -17,6 +18,7 @@ namespace RPG.Control
         [Header("Waypoint Stuff")]
         [SerializeField] PatrolPath patrolPath;
         [SerializeField] float wayPointTolerance = 1f;
+        [SerializeField] float patrolSpeedFraction = 0.2f;
 
         private Fighter fighter;
         private Mover mover;
@@ -92,7 +94,7 @@ namespace RPG.Control
             Vector3 nextPos;
             if (patrolPath == null) nextPos = guardPos;
             else
-            {                
+            {
                 if (Vector2DDistance(transform.position, GetWayPoint()) < wayPointTolerance)
                 {
                     timeSinceWayPoint = 0;
@@ -100,7 +102,7 @@ namespace RPG.Control
                 }
                 nextPos = GetWayPoint();
             }
-            if (timeSinceWayPoint > dwellTimeAtWaypoint) mover.MoveAction(nextPos);
+            if (timeSinceWayPoint > dwellTimeAtWaypoint) mover.MoveAction(nextPos, patrolSpeedFraction);
         }
 
         private Vector3 GetWayPoint()

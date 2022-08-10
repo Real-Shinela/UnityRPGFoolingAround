@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  maxSpeed: 8
 --- !u!195 &2035146980
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -179,7 +180,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300028, guid: d288a0e4a2d923b46898986e979da643, type: 3}
 --- !u!114 &2035147000
 MonoBehaviour:
   m_ObjectHideFlags: 0
