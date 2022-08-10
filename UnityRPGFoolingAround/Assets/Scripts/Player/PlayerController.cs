@@ -24,6 +24,16 @@ namespace RPG.Control
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                mover.maxSpeed *= 2;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                mover.maxSpeed /= 2;
+            }
+
+
             if (!health.IsDead())
             {
                 InteractWithCombat();

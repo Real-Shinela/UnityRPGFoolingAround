@@ -12,7 +12,15 @@ public class Portal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Single);
+            StartCoroutine(Transition());
         }
+    }
+
+    private IEnumerator Transition()
+    {
+        DontDestroyOnLoad(gameObject);
+        yield return SceneManager.LoadSceneAsync(sceneToLoad);
+        print("Scene Loaded");
+        Destroy(gameObject);
     }
 }

@@ -1379,7 +1379,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.6497802e-10, y: 0.000000010373104, z: 2.127518e+23, w: 0.000000042887425}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -1998,7 +1998,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1630035491}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 79965831153407593, guid: 26a044cea27954b4faa68f135e940d0f, type: 3}
       propertyPath: m_Name
@@ -2018,15 +2018,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2785215532213749281, guid: 26a044cea27954b4faa68f135e940d0f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.120815
+      value: 40.5
       objectReference: {fileID: 0}
     - target: {fileID: 2785215532213749281, guid: 26a044cea27954b4faa68f135e940d0f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.315087
+      value: 5.13
       objectReference: {fileID: 0}
     - target: {fileID: 2785215532213749281, guid: 26a044cea27954b4faa68f135e940d0f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -31.30741
+      value: -24.31
       objectReference: {fileID: 0}
     - target: {fileID: 2785215532213749281, guid: 26a044cea27954b4faa68f135e940d0f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2058,11 +2058,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26a044cea27954b4faa68f135e940d0f, type: 3}
---- !u!4 &931724059 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2785215532213749281, guid: 26a044cea27954b4faa68f135e940d0f, type: 3}
-  m_PrefabInstance: {fileID: 931724058}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &940685065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 460534, guid: d556d30cab334dd449000218c87322ef, type: 3}
@@ -3780,7 +3775,6 @@ Transform:
   - {fileID: 705507995}
   - {fileID: 2035146986}
   - {fileID: 1393849787}
-  - {fileID: 931724059}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

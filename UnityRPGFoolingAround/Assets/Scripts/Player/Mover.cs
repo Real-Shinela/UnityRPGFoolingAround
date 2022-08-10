@@ -8,7 +8,7 @@ namespace RPG.Movement
     {
 
         [SerializeField] Transform target;
-        [SerializeField] float maxSpeed = 8f;
+        [SerializeField] public float maxSpeed = 8f;
 
         NavMeshAgent navMeshAgent;
         Animator animator;
